@@ -11,23 +11,27 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  color: white;
 }
 
 .container {
   text-align: center;
   color: white;
   padding: 40px;
+  width: 100%;
+  max-width: 500px;
 }
 
 h1 {
-  font-size: 64px;
+  font-size: 48px;
   margin-bottom: 10px;
+  white-space: nowrap;
   text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
 }
 
 p {
-  font-size: 20px;
-  margin-bottom: 50px;
+  font-size: 18px;
+  margin-bottom: 30px;
   opacity: 0.7;
 }
 
@@ -37,25 +41,115 @@ p {
   justify-content: center;
 }
 
-button {
+.buttons button:first-child {
+  background: #e94560;
+  color: white;
+  border: none;
+}
+
+.buttons button:last-child {
+  background: #0f3460;
+  color: white;
+  border: 2px solid white;
+}
+
+.buttons button {
   padding: 20px 40px;
   font-size: 20px;
-  border: none;
   border-radius: 16px;
   cursor: pointer;
   transition: transform 0.2s;
 }
 
-button:hover {
+.buttons button:hover {
   transform: scale(1.05);
 }
 
-button:first-child {
-  background: #e94560;
-  color: white;
+.auth-card {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 36px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 10px;
 }
 
-button:last-child {
-  background: #0f3460;
+.toggle-btns {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.toggle {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
   color: white;
-  border: 2px solid white;
+  font-size: 15px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.toggle.active {
+  background: #e94560;
+  border-color: #e94560;
+}
+
+#login-form, #signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+input {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  font-size: 15px;
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.main-btn {
+  width: 100%;
+  padding: 14px;
+  background: #e94560;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.main-btn:hover {
+  transform: scale(1.02);
+}
+
+#error-message {
+  color: #e94560;
+  font-size: 13px;
+  min-height: 16px;
+}
+
+.back-link {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 13px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.back-link:hover {
+  color: white;
+}

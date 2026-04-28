@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Number Run - Login</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>🔢 Number Run</h1>
+      <p>Welcome back!</p>
+
+      <div class="auth-card">
+        <div class="toggle-btns">
+          <button class="toggle active" id="login-toggle" onclick="showLogin()">Log In</button>
+          <button class="toggle" id="signup-toggle" onclick="showSignup()">Sign Up</button>
+        </div>
+
+        <div id="login-form">
+          <input type="email" id="login-email" placeholder="Email" />
+          <input type="password" id="login-password" placeholder="Password" />
+          <button class="main-btn" onclick="handleLogin()">Log In</button>
+        </div>
+
+        <div id="signup-form" style="display:none">
+          <input type="text" id="signup-name" placeholder="Your name" />
+          <input type="email" id="signup-email" placeholder="Email" />
+          <input type="password" id="signup-password" placeholder="Password" />
+          <button class="main-btn" onclick="handleSignup()">Create Account</button>
+        </div>
+
+        <p id="error-message"></p>
+
+        <p class="back-link" onclick="window.location.href='index.html'">
+          ← Back to home
+        </p>
+      </div>
+    </div>
+    <script src="login.js"></script>
+  </body>
+</html>

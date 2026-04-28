@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Number Run - Teacher</title>
+    <link rel="stylesheet" href="teacher.css" />
+  </head>
+  <body>
+    <div class="header">
+      <h1>🔢 Number Run</h1>
+      <button class="logout-btn" onclick="window.location.href='../index.html'">
+        Log Out
+      </button>
+    </div>
+
+    <div class="container">
+
+      <div class="card">
+        <h2>Your Class Code</h2>
+        <div class="class-code" id="class-code">Loading...</div>
+        <p>Share this code with your students so they can join your class</p>
+      </div>
+
+      <div class="card">
+        <h2>📢 Post an Announcement</h2>
+        <textarea id="announcement-input" placeholder="Write something encouraging..."></textarea>
+        <button class="post-btn" id="post-btn">Post Announcement</button>
+        <div id="announcements-list"></div>
+      </div>
+
+      <div class="card">
+        <h2>📝 Assign Exercises</h2>
+        <div class="exercise-list">
+          <div class="exercise-item">
+            <span>Level 1 — Addition (1–10)</span>
+            <button class="assign-btn">Assign</button>
+          </div>
+          <div class="exercise-item">
+            <span>Level 2 — Subtraction (1–10)</span>
+            <button class="assign-btn">Assign</button>
+          </div>
+          <div class="exercise-item">
+            <span>Level 3 — Addition (10–20)</span>
+            <button class="assign-btn">Assign</button>
+          </div>
+          <div class="exercise-item">
+            <span>Level 4 — Mixed (1–20)</span>
+            <button class="assign-btn">Assign</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </body>
+</html>  

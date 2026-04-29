@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Number Run - Student</title>
+    <link rel="stylesheet" href="student.css" />
+  </head>
+  <body>
+    <div class="header">
+      <h1>🔢 Number Run</h1>
+      <button class="logout-btn" onclick="window.location.href='../index.html'">
+        Log Out
+      </button>
+    </div>
+
+    <div class="container">
+
+      <div class="card welcome-card">
+        <h2>Welcome back! 👋</h2>
+        <p id="class-info">You are in class: <span id="class-code-display">Loading...</span></p>
+      </div>
+
+      <div class="card">
+        <h2>📢 Announcements</h2>
+        <div id="announcements-display">
+          <p class="empty-msg">No announcements yet.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>🧮 Today's Exercise</h2>
+        <div id="exercise-display">
+          <p class="empty-msg">No exercise assigned yet.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>📷 Show Your Answer</h2>
+        <p class="subtitle">Write your answer on paper and hold it up to the camera</p>
+        <div id="webcam-container"></div>
+        <div id="answer-result"></div>
+      </div>
+
+    </div>
+
+    <script src="student.js"></script>
+  </body>
+</html>

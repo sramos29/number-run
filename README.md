@@ -41,7 +41,7 @@ Coming soon — will be deployed on Netlify
 - Claude and ChatGPT: used for architecture planning, debugging, code generation and problem solving throughout development
 
 ## 👩‍💻 Contributions
-- Sofia Ramos: home page, login page, teacher dashboard, student dashboard, localStorage data persistence, styling
+- Sofia Ramos: home page, teacher dashboard, student dashboard, localStorage data persistence, styling
 - Lucas Mont: math question logic, Teachable Machine model training, webcam answer detection, deployment
 
 ## ✅ Features

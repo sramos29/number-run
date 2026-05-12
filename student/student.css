@@ -78,7 +78,7 @@ body {
 .subtitle {
   opacity: 0.6;
   font-size: 14px;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 #class-code-display {
@@ -87,22 +87,42 @@ body {
   font-size: 18px;
 }
 
-#webcam-container {
-  width: 100%;
-  min-height: 200px;
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 12px;
-  border: 2px dashed rgba(255, 255, 255, 0.2);
+#mic-container {
   display: flex;
   justify-content: center;
-  align-items: center;
-  color: rgba(255, 255, 255, 0.3);
-  font-size: 14px;
+  margin: 10px 0;
+}
+
+.mic-btn {
+  background: #e94560;
+  color: white;
+  border: none;
+  padding: 20px 40px;
+  border-radius: 50px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.mic-btn:hover {
+  transform: scale(1.05);
+}
+
+.mic-btn.listening {
+  background: #2ecc71;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
 }
 
 #answer-result {
   margin-top: 16px;
-  font-size: 18px;
+  font-size: 20px;
   text-align: center;
   min-height: 30px;
+  font-weight: bold;
 }

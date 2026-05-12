@@ -52,7 +52,7 @@ function loadAssignedExercise() {
   display.innerHTML = `
     <div style="background:rgba(233,69,96,0.15); border:1px solid rgba(233,69,96,0.3); padding:16px; border-radius:10px;">
       <p style="font-size:18px; font-weight:bold;">${exercise}</p>
-      <p style="opacity:0.6; font-size:14px; margin-top:6px;">Complete this exercise by showing your answer to the camera!</p>
+      <p style="opacity:0.6; font-size:14px; margin-top:6px;">Complete this exercise by saying your answer out loud!</p>
     </div>
   `;
 }

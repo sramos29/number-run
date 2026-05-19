@@ -15,11 +15,25 @@
       </button>
     </div>
 
-    <div class="container">
+    <!-- Join Class Screen -->
+    <div class="container" id="join-screen">
+      <div class="card" style="max-width: 400px; margin: 0 auto;">
+        <h2>🎒 Join Your Class</h2>
+        <p style="opacity:0.6; margin-bottom:20px; font-size:14px;">Ask your teacher for the class code</p>
+        <input type="text" id="code-input" placeholder="Enter class code..." maxlength="5" style="text-transform:uppercase;" />
+        <button class="mic-btn" onclick="joinClass()" style="margin-top:12px;">
+          Join Class →
+        </button>
+        <p id="join-error" style="color:#ff6b6b; font-size:13px; font-weight:700; min-height:20px; margin-top:8px;"></p>
+      </div>
+    </div>
+
+    <!-- Dashboard Screen (hidden until code is entered) -->
+    <div class="container" id="dashboard-screen" style="display:none">
 
       <div class="card welcome-card">
         <h2>Welcome back! 👋</h2>
-        <p id="class-info">You are in class: <span id="class-code-display">Loading...</span></p>
+        <p>You are in class: <span id="class-code-display"></span></p>
       </div>
 
       <div class="card">

@@ -1,16 +1,34 @@
-// Load everything when page opens
-window.onload = async function() {
-  await loadClassCode();
+// Join class function
+async function joinClass() {
+  const input = document.getElementById("code-input").value.trim().toUpperCase();
+  const error = document.getElementById("join-error");
+
+  if (!input || input.length !== 5) {
+    error.textContent = "Please enter a 5 character class code!";
+    return;
+  }
+
+  // Check if code exists in Supabase
+  const data = await getClassroomData();
+
+  if (!data || data.class_code !== input) {
+    error.textContent = "Invalid class code. Try again!";
+    return;
+  }
+
+  // Code is correct — show dashboard
+  document.getElementById("join-screen").style.display = "none";
+  document.getElementById("dashboard-screen").style.display = "block";
+  document.getElementById("class-code-display").textContent = input;
+
   await loadAnnouncements();
   await loadAssignedExercise();
 }
 
-// Show class code
-async function loadClassCode() {
-  const code = await getClassCode();
-  const display = document.getElementById("class-code-display");
-  display.textContent = code || "No class yet";
-}
+// Allow pressing Enter to join
+document.getElementById("code-input").addEventListener("keypress", function(e) {
+  if (e.key === "Enter") joinClass();
+});
 
 // Show announcements
 async function loadAnnouncements() {

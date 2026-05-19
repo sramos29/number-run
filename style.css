@@ -1,12 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Nunito', sans-serif;
 }
 
 body {
-  background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f64f59 100%);
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -16,65 +18,75 @@ body {
 
 .container {
   text-align: center;
-  color: white;
-  padding: 40px;
+  padding: 40px 20px;
   width: 100%;
   max-width: 500px;
 }
 
 h1 {
-  font-size: 48px;
-  margin-bottom: 10px;
+  font-size: 56px;
+  font-weight: 900;
+  margin-bottom: 8px;
+  text-shadow: 3px 3px 0px rgba(0,0,0,0.15);
   white-space: nowrap;
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
 }
 
 p {
   font-size: 18px;
   margin-bottom: 30px;
-  opacity: 0.7;
+  opacity: 0.9;
+  font-weight: 600;
 }
 
 .buttons {
   display: flex;
   gap: 20px;
   justify-content: center;
-}
-
-.buttons button:first-child {
-  background: #e94560;
-  color: white;
-  border: none;
-}
-
-.buttons button:last-child {
-  background: #0f3460;
-  color: white;
-  border: 2px solid white;
+  flex-wrap: wrap;
 }
 
 .buttons button {
-  padding: 20px 40px;
+  padding: 20px 36px;
   font-size: 20px;
-  border-radius: 16px;
+  font-weight: 800;
+  border: none;
+  border-radius: 20px;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 6px 0px rgba(0,0,0,0.2);
+  font-family: 'Nunito', sans-serif;
 }
 
 .buttons button:hover {
-  transform: scale(1.05);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 0px rgba(0,0,0,0.2);
+}
+
+.buttons button:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0px rgba(0,0,0,0.2);
+}
+
+.buttons button:first-child {
+  background: #ff6b6b;
+  color: white;
+}
+
+.buttons button:last-child {
+  background: #ffd93d;
+  color: #333;
 }
 
 .auth-card {
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
+  background: white;
+  border-radius: 24px;
   padding: 36px;
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 14px;
   margin-top: 10px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
 }
 
 .toggle-btns {
@@ -86,18 +98,20 @@ p {
 .toggle {
   flex: 1;
   padding: 10px;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  border: 2px solid #e0e0e0;
   background: transparent;
-  color: white;
+  color: #666;
   font-size: 15px;
+  font-weight: 700;
   cursor: pointer;
-  transition: transform 0.2s;
+  font-family: 'Nunito', sans-serif;
 }
 
 .toggle.active {
-  background: #e94560;
-  border-color: #e94560;
+  background: #667eea;
+  border-color: #667eea;
+  color: white;
 }
 
 #login-form, #signup-form {
@@ -110,46 +124,58 @@ p {
 input {
   width: 100%;
   padding: 14px 16px;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  background: rgba(255, 255, 255, 0.05);
-  color: white;
+  border-radius: 12px;
+  border: 2px solid #e0e0e0;
+  background: #f8f8f8;
+  color: #333;
   font-size: 15px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 600;
 }
 
 input::placeholder {
-  color: rgba(255, 255, 255, 0.3);
+  color: #aaa;
+}
+
+input:focus {
+  outline: none;
+  border-color: #667eea;
 }
 
 .main-btn {
   width: 100%;
   padding: 14px;
-  background: #e94560;
+  background: #667eea;
   color: white;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   font-size: 16px;
+  font-weight: 800;
   cursor: pointer;
   transition: transform 0.2s;
+  font-family: 'Nunito', sans-serif;
+  box-shadow: 0 4px 0px #4a5cc7;
 }
 
 .main-btn:hover {
-  transform: scale(1.02);
+  transform: translateY(-2px);
 }
 
 #error-message {
-  color: #e94560;
+  color: #f64f59;
   font-size: 13px;
   min-height: 16px;
+  font-weight: 700;
 }
 
 .back-link {
-  color: rgba(255, 255, 255, 0.4);
+  color: #999;
   font-size: 13px;
   cursor: pointer;
   text-align: center;
+  font-weight: 700;
 }
 
 .back-link:hover {
-  color: white;
+  color: #667eea;
 }

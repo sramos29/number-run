@@ -63,3 +63,8 @@ async function loadAssignedExercise() {
     </div>
   `;
 }
+
+let lives = 3;
+let score = 0;
+let total = 10;
+let currentAnswer = null;

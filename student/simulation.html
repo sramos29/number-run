@@ -6,12 +6,33 @@
   <link rel="stylesheet" href="student.css"/>
 </head>
 <body>
-
   <div id="simulation">
+    <div id="header">
+      <div id="hearts">❤️❤️❤️</div>
+      <div id="progress-bar-container">
+        <div id="progress-bar"></div>
+      </div>
+      <div id="score">0 / 10</div>
+    </div>
+
+    <div id="character">🐸</div>
     <p id="exercise-text"></p>
-    <button id="mic-btn" onclick="startListening()">🎙️ Tap to Speak</button>
+
+    <button id="mic-btn" onclick="startListening()">🎤 Tap to Speak</button>
     <p id="transcript-box"></p>
     <p id="result-box"></p>
+  </div>
+
+  <div id="game-over" style="display:none">
+    <div id="character">😢</div>
+    <h2>No more hearts!</h2>
+    <button onclick="restartGame()">Try Again</button>
+  </div>
+
+  <div id="victory" style="display:none">
+    <div id="character">🎉</div>
+    <h2>Amazing job!</h2>
+    <button onclick="restartGame()">Play Again</button>
   </div>
 
   <script src="student.js"></script>

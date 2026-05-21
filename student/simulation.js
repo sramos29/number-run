@@ -26,3 +26,8 @@ function generateQuestion() {
   const heartsEl = document.getElementById('hearts');
   heartsEl.textContent = '❤️'.repeat(lives) + '🖤'.repeat(3 - lives);
 }
+function updateProgress() {
+  const pct = (score / total) * 100;
+  document.getElementById('progress-bar').style.width = pct + '%';
+  document.getElementById('score').textContent = `${score} / ${total}`;
+}

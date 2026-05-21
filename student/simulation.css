@@ -71,3 +71,9 @@
   color: white;
   min-height: 24px;
 }
+
+#game-over, #victory {
+  text-align: center;
+  color: white;
+  padding: 2rem;
+}

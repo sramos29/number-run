@@ -55,3 +55,59 @@ function startListening() {
     document.getElementById('mic-btn').textContent = '🎤 Tap to Speak';
   };
 }
+
+function checkAnswer(said) {
+  const spokenNumbers = {
+    'zero':0,'one':1,'two':2,'three':3,'four':4,
+    'five':5,'six':6,'seven':7,'eight':8,'nine':9,'ten':10
+  };
+
+  let heard = parseInt(said);
+  if (isNaN(heard)) heard = spokenNumbers[said];
+
+  const resultBox = document.getElementById('result-box');
+
+  if (heard === currentAnswer) {
+    resultBox.textContent = '✅ Correct! Great job!';
+    resultBox.style.color = 'green';
+    score++;
+    updateProgress();
+    if (score >= total) {
+      setTimeout(() => {
+        document.getElementById('simulation').style.display = 'none';
+        document.getElementById('victory').style.display = 'block';
+      }, 1000);
+      return;
+    }
+  } else {
+    resultBox.textContent = `❌ Not quite! The answer was ${currentAnswer}`;
+    resultBox.style.color = 'red';
+    lives--;
+    updateHearts();
+    if (lives <= 0) {
+      setTimeout(() => {
+        document.getElementById('simulation').style.display = 'none';
+        document.getElementById('game-over').style.display = 'block';
+      }, 1000);
+      return;
+    }
+  }
+
+  setTimeout(generateQuestion, 1500);
+}
+
+function restartGame() {
+  lives = 3;
+  score = 0;
+  updateHearts();
+  updateProgress();
+  document.getElementById('simulation').style.display = 'block';
+  document.getElementById('game-over').style.display = 'none';
+  document.getElementById('victory').style.display = 'none';
+  generateQuestion();
+}
+
+// Start!
+generateQuestion();
+updateHearts();
+updateProgress();

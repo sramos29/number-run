@@ -8,3 +8,11 @@ function generateQuestion() {
   const op = ops[Math.floor(Math.random() * ops.length)];
   let a, b;
 }
+
+ if (op === '+') {
+    a = Math.floor(Math.random() * 10) + 1;
+    b = Math.floor(Math.random() * (10 - a)) + 1;
+  } else {
+    a = Math.floor(Math.random() * 10) + 1;
+    b = Math.floor(Math.random() * a) + 1;
+  }

@@ -7,3 +7,4 @@ function generateQuestion() {
   const ops = ['+', '-'];
   const op = ops[Math.floor(Math.random() * ops.length)];
   let a, b;
+}

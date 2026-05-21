@@ -16,8 +16,13 @@ function generateQuestion() {
     a = Math.floor(Math.random() * 10) + 1;
     b = Math.floor(Math.random() * a) + 1;
   }
-  
+
   currentAnswer = op === '+' ? a + b : a - b;
   document.getElementById('exercise-text').textContent = `What is ${a} ${op} ${b}?`;
   document.getElementById('result-box').textContent = '';
   document.getElementById('transcript-box').textContent = '';
+
+  function updateHearts() {
+  const heartsEl = document.getElementById('hearts');
+  heartsEl.textContent = '❤️'.repeat(lives) + '🖤'.repeat(3 - lives);
+}

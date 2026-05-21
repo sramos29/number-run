@@ -31,3 +31,27 @@ function updateProgress() {
   document.getElementById('progress-bar').style.width = pct + '%';
   document.getElementById('score').textContent = `${score} / ${total}`;
 }
+
+function startListening() {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) {
+    alert('Your browser does not support voice recognition. Try Chrome!');
+    return;
+  }
+
+  const recognition = new SpeechRecognition();
+  recognition.lang = 'en-US';
+  recognition.start();
+
+  document.getElementById('mic-btn').textContent = '🎙️ Listening...';
+
+  recognition.onresult = (event) => {
+    const said = event.results[0][0].transcript.trim().toLowerCase();
+    document.getElementById('transcript-box').textContent = `You said: "${said}"`;
+    checkAnswer(said);
+  };
+
+  recognition.onend = () => {
+    document.getElementById('mic-btn').textContent = '🎤 Tap to Speak';
+  };
+}

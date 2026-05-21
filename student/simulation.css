@@ -61,8 +61,8 @@
 #mic-btn {
   display: block;
   margin: 0 auto 1rem;
-  background: #7c3aed;
-  color: white;
+  background: white;
+  color: #7c3aed;
   border: none;
   border-radius: 99px;
   padding: 14px 32px;

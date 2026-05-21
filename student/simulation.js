@@ -9,7 +9,8 @@ function generateQuestion() {
   let a, b;
 }
 
- if (op === '+') {
+if (op === '+') {
+
     a = Math.floor(Math.random() * 10) + 1;
     b = Math.floor(Math.random() * (10 - a)) + 1;
   } else {

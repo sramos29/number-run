@@ -10,3 +10,8 @@
   gap: 12px;
   margin-bottom: 1.5rem;
 }
+
+#hearts {
+  font-size: 22px;
+  letter-spacing: 2px;
+}

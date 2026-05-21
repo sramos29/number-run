@@ -1,8 +1,14 @@
+#bodybg {
+    background-color: #7c3aed;
+}
+
 #simulation {
   max-width: 480px;
   margin: 2rem auto;
   padding: 1.5rem;
 }
+
+
 
 #header {
   display: flex;

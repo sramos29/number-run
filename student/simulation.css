@@ -31,3 +31,9 @@
   width: 0%;
   transition: width 0.4s ease;
 }
+
+#score {
+  font-size: 13px;
+  color: white;
+  font-weight: 500;
+}

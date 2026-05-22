@@ -8,7 +8,6 @@ async function joinClass() {
     return;
   }
 
-  // Check if code exists in Supabase
   const data = await getClassroomData();
 
   if (!data || data.class_code !== input) {
@@ -16,7 +15,6 @@ async function joinClass() {
     return;
   }
 
-  // Code is correct — show dashboard
   document.getElementById("join-screen").style.display = "none";
   document.getElementById("dashboard-screen").style.display = "block";
   document.getElementById("class-code-display").textContent = input;
@@ -26,9 +24,12 @@ async function joinClass() {
 }
 
 // Allow pressing Enter to join
-document.getElementById("code-input").addEventListener("keypress", function(e) {
-  if (e.key === "Enter") joinClass();
-});
+const codeInput = document.getElementById("code-input");
+if (codeInput) {
+  codeInput.addEventListener("keypress", function(e) {
+    if (e.key === "Enter") joinClass();
+  });
+}
 
 // Show announcements
 async function loadAnnouncements() {
@@ -63,4 +64,3 @@ async function loadAssignedExercise() {
     </div>
   `;
 }
-

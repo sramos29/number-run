@@ -1,35 +1,6 @@
-// Supabase configuration
 const SUPABASE_URL = "https://ehskahiyhiqafaubxhxo.supabase.co";
 const SUPABASE_KEY = "sb_publishable__Bt-TIM5-XTZZ7teVR1XBA_rR5rTg9M";
 
-// Helper function to make API calls to Supabase
-async function supabaseRequest(method, body = null, filters = "") {
-  const url = `${SUPABASE_URL}/rest/v1/classroom${filters}`;
-  const options = {
-    method: method,
-    headers: {
-      "Content-Type": "application/json",
-      "apikey": SUPABASE_KEY,
-      "Authorization": `Bearer ${SUPABASE_KEY}`,
-      "Prefer": method === "POST" ? "return=representation" : "return=representation"
-    }
-  };
-  if (body) options.body = JSON.stringify(body);
-  const response = await fetch(url);
-  return response.json();
-}
-
-// Generate a random 5 character class code
-function generateClassCode() {
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  let code = "";
-  for (let i = 0; i < 5; i++) {
-    code += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-  return code;
-}
-
-// Get classroom data from Supabase
 async function getClassroomData() {
   const response = await fetch(
     `${SUPABASE_URL}/rest/v1/classroom?select=*&limit=1`,
@@ -44,12 +15,18 @@ async function getClassroomData() {
   return data.length > 0 ? data[0] : null;
 }
 
-// Save or update classroom data
+function generateClassCode() {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let code = "";
+  for (let i = 0; i < 5; i++) {
+    code += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return code;
+}
+
 async function saveClassroomData(classCode, announcements, assignedExercise) {
   const existing = await getClassroomData();
-
   if (existing) {
-    // Update existing row
     await fetch(
       `${SUPABASE_URL}/rest/v1/classroom?class_code=eq.${existing.class_code}`,
       {
@@ -67,7 +44,6 @@ async function saveClassroomData(classCode, announcements, assignedExercise) {
       }
     );
   } else {
-    // Insert new row
     await fetch(
       `${SUPABASE_URL}/rest/v1/classroom`,
       {
@@ -88,13 +64,11 @@ async function saveClassroomData(classCode, announcements, assignedExercise) {
   }
 }
 
-// Get class code
 async function getClassCode() {
   const data = await getClassroomData();
   return data ? data.class_code : null;
 }
 
-// Get announcements
 async function getAnnouncements() {
   const data = await getClassroomData();
   if (!data || !data.announcements) return [];
@@ -105,14 +79,10 @@ async function getAnnouncements() {
   }
 }
 
-// Save announcement
 async function saveAnnouncement(text) {
   const data = await getClassroomData();
   const announcements = data && data.announcements ? JSON.parse(data.announcements) : [];
-  announcements.push({
-    text: text,
-    date: new Date().toLocaleDateString()
-  });
+  announcements.push({ text: text, date: new Date().toLocaleDateString() });
   await saveClassroomData(
     data ? data.class_code : generateClassCode(),
     JSON.stringify(announcements),
@@ -120,18 +90,36 @@ async function saveAnnouncement(text) {
   );
 }
 
-// Get assigned exercise
-async function getAssignedExercise() {
-  const data = await getClassroomData();
-  return data ? data.assigned_exercise : null;
+async function saveScore(classCode, score) {
+  await fetch(
+    `${SUPABASE_URL}/rest/v1/scores`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": SUPABASE_KEY,
+        "Authorization": `Bearer ${SUPABASE_KEY}`,
+        "Prefer": "return=representation"
+      },
+      body: JSON.stringify({ class_code: classCode, score: score })
+    }
+  );
 }
 
-// Save assigned exercise
-async function saveAssignedExercise(exercise) {
+async function getAverageScore() {
   const data = await getClassroomData();
-  await saveClassroomData(
-    data ? data.class_code : generateClassCode(),
-    data ? data.announcements : "",
-    exercise
+  if (!data) return null;
+  const response = await fetch(
+    `${SUPABASE_URL}/rest/v1/scores?class_code=eq.${data.class_code}&select=score`,
+    {
+      headers: {
+        "apikey": SUPABASE_KEY,
+        "Authorization": `Bearer ${SUPABASE_KEY}`
+      }
+    }
   );
+  const rows = await response.json();
+  if (!rows || rows.length === 0) return null;
+  const avg = rows.reduce((sum, r) => sum + r.score, 0) / rows.length;
+  return Math.round(avg * 10) / 10;
 }

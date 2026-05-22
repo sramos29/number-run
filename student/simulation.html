@@ -2,27 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <title>Math Simulation v1</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Number Run - Simulation</title>
+  <script src="../firebase/firebase.js"></script>
   <link rel="stylesheet" href="simulation.css"/>
 </head>
 <body id="bodybg">
-    <button onclick="window.location.href='student.html'" style="
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: white;
-    color: #667eea;
-    border: none;
-    padding: 10px 24px;
-    border-radius: 50px;
-    font-family: 'Nunito', sans-serif;
-    font-weight: 800;
-    font-size: 14px;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    z-index: 999;
+
+  <button onclick="window.location.href='student.html'" style="
+    position: fixed; top: 20px; right: 20px;
+    background: white; color: #667eea; border: none;
+    padding: 10px 24px; border-radius: 50px;
+    font-family: 'Nunito', sans-serif; font-weight: 800;
+    font-size: 14px; cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 999;
   ">← Exit</button>
-  
+
   <div id="simulation">
     <div id="header">
       <div id="hearts">❤️❤️❤️</div>
@@ -31,35 +26,27 @@
       </div>
       <div id="score">0 / 10</div>
     </div>
-
     <div id="character">🐸</div>
     <p id="exercise-text"></p>
-
     <button id="mic-btn" onclick="startListening()">🎤 Tap to Speak</button>
     <p id="transcript-box"></p>
     <p id="result-box"></p>
   </div>
 
-  <div id="game-over" style="display:none">
-    <div id="character">😢</div>
-    <h2>No more hearts!</h2>
-    <button onclick="restartGame()">Try Again</button>
+  <div id="game-over" style="display:none; text-align:center; padding:40px;">
+    <div style="font-size:80px;">😢</div>
+    <h2 style="color:white; font-family:'Nunito',sans-serif;">No more hearts!</h2>
+    <p id="final-score-gameover" style="font-size:20px; font-weight:700; color:white; margin:12px 0;"></p>
+    <button onclick="restartGame()" style="margin:10px; padding:12px 28px; border-radius:50px; border:none; background:white; color:#667eea; font-size:16px; font-weight:800; cursor:pointer;">Try Again</button>
+    <button onclick="window.location.href='student.html'" style="margin:10px; padding:12px 28px; border-radius:50px; border:none; background:#ff6b6b; color:white; font-size:16px; font-weight:800; cursor:pointer;">Back to Dashboard</button>
   </div>
 
-  <div id="victory" style="display:none">
-    <div id="character">🎉</div>
-    <h2>Amazing job!</h2>
-    <button onclick="restartGame()">Play Again</button>
-  </div>
-
-  <script src="simulation.js"></script>
-</body>
-</html>
-
-<div id="game-over" style="display:none">
-    <div id="character">😢</div>
-    <h2>No more hearts!</h2>
-    <button onclick="window.location.href='student.html'">Back to Dashboard</button>
+  <div id="victory" style="display:none; text-align:center; padding:40px;">
+    <div style="font-size:80px;">🎉</div>
+    <h2 style="color:white; font-family:'Nunito',sans-serif;">Amazing job!</h2>
+    <p id="final-score-victory" style="font-size:20px; font-weight:700; color:white; margin:12px 0;"></p>
+    <button onclick="restartGame()" style="margin:10px; padding:12px 28px; border-radius:50px; border:none; background:white; color:#667eea; font-size:16px; font-weight:800; cursor:pointer;">Play Again</button>
+    <button onclick="window.location.href='student.html'" style="margin:10px; padding:12px 28px; border-radius:50px; border:none; background:#ff6b6b; color:white; font-size:16px; font-weight:800; cursor:pointer;">Back to Dashboard</button>
   </div>
 
   <script src="simulation.js"></script>

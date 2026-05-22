@@ -1,4 +1,3 @@
-// Join class function
 async function joinClass() {
   const input = document.getElementById("code-input").value.trim().toUpperCase();
   const error = document.getElementById("join-error");
@@ -21,10 +20,8 @@ async function joinClass() {
   localStorage.setItem("joinedClassCode", input);
 
   await loadAnnouncements();
-  await loadAssignedExercise();
 }
 
-// Allow pressing Enter to join
 const codeInput = document.getElementById("code-input");
 if (codeInput) {
   codeInput.addEventListener("keypress", function(e) {
@@ -32,7 +29,6 @@ if (codeInput) {
   });
 }
 
-// Show announcements
 async function loadAnnouncements() {
   const announcements = await getAnnouncements();
   const display = document.getElementById("announcements-display");
@@ -48,20 +44,4 @@ async function loadAnnouncements() {
       </div>
     `;
   }).join("");
-}
-
-// Show assigned exercise
-async function loadAssignedExercise() {
-  const exercise = await getAssignedExercise();
-  const display = document.getElementById("exercise-display");
-  if (!exercise) {
-    display.innerHTML = "<p class='empty-msg'>No exercise assigned yet.</p>";
-    return;
-  }
-  display.innerHTML = `
-    <div style="background:linear-gradient(135deg, #ff6b6b, #ffd93d); padding:16px; border-radius:14px;">
-      <p style="font-size:18px; font-weight:800; color:white;">${exercise}</p>
-      <p style="color:rgba(255,255,255,0.8); font-size:14px; margin-top:6px; font-weight:600;">Complete this exercise by saying your answer out loud!</p>
-    </div>
-  `;
 }

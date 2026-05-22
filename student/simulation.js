@@ -74,7 +74,9 @@ function checkAnswer(said) {
     score++;
     updateProgress();
     if (score >= total) {
-      setTimeout(() => {
+      setTimeout(async () => {
+        const classCode = localStorage.getItem("joinedClassCode");
+        if (classCode) await saveScore(classCode, score);
         document.getElementById('simulation').style.display = 'none';
         document.getElementById('victory').style.display = 'block';
       }, 1000);
@@ -86,7 +88,9 @@ function checkAnswer(said) {
     lives--;
     updateHearts();
     if (lives <= 0) {
-      setTimeout(() => {
+      setTimeout(async () => {
+        const classCode = localStorage.getItem("joinedClassCode");
+        if (classCode) await saveScore(classCode, score);
         document.getElementById('simulation').style.display = 'none';
         document.getElementById('game-over').style.display = 'block';
       }, 1000);

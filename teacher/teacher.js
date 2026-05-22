@@ -2,7 +2,7 @@
 window.onload = async function() {
   await loadClassCode();
   await loadAnnouncements();
-  await loadAssignedExercise();
+  await loadAverageScore();
 }
 
 // Load or generate class code
@@ -46,41 +46,14 @@ async function loadAnnouncements() {
   }).join("");
 }
 
-// Load assigned exercise
-async function loadAssignedExercise() {
-  const assigned = await getAssignedExercise();
-  const buttons = document.querySelectorAll(".assign-btn");
-  buttons.forEach(function(button) {
-    const exercise = button.parentElement.querySelector("span").textContent;
-    if (assigned === exercise) {
-      button.textContent = "✓ Assigned";
-      button.style.background = "#2ecc71";
-      button.style.borderColor = "#2ecc71";
-      button.style.boxShadow = "0 3px 0px #27ae60";
-    }
-  });
+// Load average score
+async function loadAverageScore() {
+  const avg = await getAverageScore();
+  const display = document.getElementById("average-score");
+  if (!display) return;
+  if (avg === null) {
+    display.textContent = "No scores yet";
+  } else {
+    display.textContent = `Class average: ${avg} / 10 ⭐`;
+  }
 }
-
-// Assign buttons
-const assignButtons = document.querySelectorAll(".assign-btn");
-assignButtons.forEach(function(button) {
-  button.addEventListener("click", async function() {
-    const exercise = button.parentElement.querySelector("span").textContent;
-    if (button.textContent === "Assign") {
-      assignButtons.forEach(function(b) {
-        b.textContent = "Assign";
-        b.style.background = "#ffd93d";
-        b.style.boxShadow = "0 3px 0px #e6c200";
-      });
-      button.textContent = "✓ Assigned";
-      button.style.background = "#2ecc71";
-      button.style.boxShadow = "0 3px 0px #27ae60";
-      await saveAssignedExercise(exercise);
-    } else {
-      button.textContent = "Assign";
-      button.style.background = "#ffd93d";
-      button.style.boxShadow = "0 3px 0px #e6c200";
-      await saveAssignedExercise("");
-    }
-  });
-});

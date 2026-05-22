@@ -18,6 +18,7 @@ async function joinClass() {
   document.getElementById("join-screen").style.display = "none";
   document.getElementById("dashboard-screen").style.display = "block";
   document.getElementById("class-code-display").textContent = input;
+  localStorage.setItem("joinedClassCode", input);
 
   await loadAnnouncements();
   await loadAssignedExercise();

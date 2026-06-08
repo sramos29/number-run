@@ -1,6 +1,12 @@
 async function joinClass() {
+  const name = document.getElementById("name-input").value.trim();
   const input = document.getElementById("code-input").value.trim().toUpperCase();
   const error = document.getElementById("join-error");
+
+  if (!name) {
+    error.textContent = "Please type your name!";
+    return;
+  }
 
   if (!input || input.length !== 5) {
     error.textContent = "Please enter a 5 character class code!";
@@ -17,7 +23,9 @@ async function joinClass() {
   document.getElementById("join-screen").style.display = "none";
   document.getElementById("dashboard-screen").style.display = "block";
   document.getElementById("class-code-display").textContent = input;
+  document.getElementById("student-name-display").textContent = name;
   localStorage.setItem("joinedClassCode", input);
+  localStorage.setItem("studentName", name);
 
   await loadAnnouncements();
 }
@@ -26,6 +34,13 @@ const codeInput = document.getElementById("code-input");
 if (codeInput) {
   codeInput.addEventListener("keypress", function(e) {
     if (e.key === "Enter") joinClass();
+  });
+}
+
+const nameInput = document.getElementById("name-input");
+if (nameInput) {
+  nameInput.addEventListener("keypress", function(e) {
+    if (e.key === "Enter") document.getElementById("code-input").focus();
   });
 }
 

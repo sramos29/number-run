@@ -21,6 +21,24 @@
         <h2>Your Class Code</h2>
         <div class="class-code" id="class-code">Loading...</div>
         <p>Share this code with your students so they can join your class</p>
+        <button class="post-btn" id="new-session-btn" style="margin-top:16px; background:#ff6b6b;">
+          🔄 Start New Session
+        </button>
+        <p style="opacity:0.5; font-size:12px; margin-top:8px; font-weight:600;">
+          This makes a fresh code and clears the current scores and announcements.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2>🎯 Choose the Math Level</h2>
+        <p style="opacity:0.6; font-size:14px; margin-bottom:12px;">Pick what your students will practice</p>
+        <div id="level-buttons" style="display:flex; flex-wrap:wrap; gap:10px;">
+          <button class="level-btn" data-level="addition">➕ Addition</button>
+          <button class="level-btn" data-level="subtraction">➖ Subtraction</button>
+          <button class="level-btn" data-level="multiplication">✖️ Multiplication</button>
+          <button class="level-btn" data-level="division">➗ Division</button>
+          <button class="level-btn" data-level="mixed">🎲 Mixed</button>
+        </div>
       </div>
 
       <div class="card">
@@ -35,9 +53,31 @@
         <p id="average-score" style="font-size:24px; font-weight:800; color:#667eea; margin-top:8px;">
           Loading...
         </p>
+        <div id="scores-list" style="margin-top:16px;"></div>
       </div>
 
     </div>
+
+    <style>
+      .level-btn {
+        font-family: 'Nunito', sans-serif;
+        font-weight: 800;
+        font-size: 14px;
+        padding: 10px 18px;
+        border: 2px solid #e6e6f0;
+        border-radius: 50px;
+        background: white;
+        color: #667eea;
+        cursor: pointer;
+        transition: transform 0.1s ease, background 0.2s ease;
+      }
+      .level-btn:hover { transform: scale(1.05); }
+      .level-btn.active {
+        background: linear-gradient(135deg, #764ba2, #ff6ec4);
+        color: white;
+        border-color: transparent;
+      }
+    </style>
 
     <script src="teacher.js"></script>
   </body>

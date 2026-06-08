@@ -18,8 +18,9 @@
     <div class="container" id="join-screen">
       <div class="card" style="max-width: 400px; margin: 0 auto;">
         <h2>🎒 Join Your Class</h2>
-        <p style="opacity:0.6; margin-bottom:20px; font-size:14px;">Ask your teacher for the class code</p>
-        <input type="text" id="code-input" placeholder="Enter class code..." maxlength="5" style="text-transform:uppercase;" />
+        <p style="opacity:0.6; margin-bottom:20px; font-size:14px;">Type your name and your teacher's class code</p>
+        <input type="text" id="name-input" placeholder="Your name..." maxlength="20" />
+        <input type="text" id="code-input" placeholder="Enter class code..." maxlength="5" style="text-transform:uppercase; margin-top:12px;" />
         <button class="mic-btn" onclick="joinClass()" style="margin-top:12px;">Join Class →</button>
         <p id="join-error" style="color:#ff6b6b; font-size:13px; font-weight:700; min-height:20px; margin-top:8px;"></p>
       </div>
@@ -28,7 +29,7 @@
     <div class="container" id="dashboard-screen" style="display:none">
 
       <div class="card welcome-card">
-        <h2>Welcome back! 👋</h2>
+        <h2>Welcome, <span id="student-name-display">friend</span>! 👋</h2>
         <p>You are in class: <span id="class-code-display"></span></p>
       </div>
 

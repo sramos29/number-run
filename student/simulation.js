@@ -2,19 +2,50 @@ let lives = 3;
 let score = 0;
 let total = 10;
 let currentAnswer = null;
+let level = "mixed"; // set from the teacher's chosen exercise on load
+
+// Read the level the teacher picked, then start the game
+async function loadLevel() {
+  try {
+    level = await getAssignedExercise();
+  } catch {
+    level = "mixed";
+  }
+  generateQuestion();
+}
+
+function randInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 function generateQuestion() {
-  const ops = ['+', '-'];
-  const op = ops[Math.floor(Math.random() * ops.length)];
-  let a, b;
-  if (op === '+') {
-    a = Math.floor(Math.random() * 10) + 1;
-    b = Math.floor(Math.random() * (10 - a)) + 1;
+  // Decide which operation this question uses
+  let op;
+  if (level === "mixed") {
+    op = ["+", "-", "×", "÷"][randInt(0, 3)];
   } else {
-    a = Math.floor(Math.random() * 10) + 1;
-    b = Math.floor(Math.random() * a) + 1;
+    op = { addition: "+", subtraction: "-", multiplication: "×", division: "÷" }[level] || "+";
   }
-  currentAnswer = op === '+' ? a + b : a - b;
+
+  let a, b;
+  if (op === "+") {
+    a = randInt(1, 10);
+    b = randInt(1, 10);
+    currentAnswer = a + b;
+  } else if (op === "-") {
+    a = randInt(1, 10);
+    b = randInt(1, a);            // keeps the answer 0 or higher
+    currentAnswer = a - b;
+  } else if (op === "×") {
+    a = randInt(2, 9);
+    b = randInt(2, 9);
+    currentAnswer = a * b;
+  } else { // division
+    b = randInt(2, 9);
+    currentAnswer = randInt(2, 9);
+    a = b * currentAnswer;        // guarantees a clean whole-number answer
+  }
+
   document.getElementById('exercise-text').textContent = `What is ${a} ${op} ${b}?`;
   document.getElementById('result-box').textContent = '';
   document.getElementById('transcript-box').textContent = '';
@@ -51,14 +82,46 @@ function startListening() {
   };
 }
 
-function checkAnswer(said) {
-  const spokenNumbers = {
-    'zero':0,'one':1,'two':2,'three':3,'four':4,
-    'five':5,'six':6,'seven':7,'eight':8,'nine':9,'ten':10
-  };
-  let heard = parseInt(said);
-  if (isNaN(heard)) heard = spokenNumbers[said];
+// Turn whatever the student said into a number.
+// Handles plain digits ("56") and words up to one hundred ("fifty six").
+function wordsToNumber(text) {
+  text = String(text).toLowerCase().trim();
 
+  const digits = text.match(/\d+/);
+  if (digits) return parseInt(digits[0], 10);
+
+  const ones = {
+    zero: 0, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7,
+    eight: 8, nine: 9, ten: 10, eleven: 11, twelve: 12, thirteen: 13,
+    fourteen: 14, fifteen: 15, sixteen: 16, seventeen: 17, eighteen: 18, nineteen: 19
+  };
+  const tens = {
+    twenty: 20, thirty: 30, forty: 40, fifty: 50,
+    sixty: 60, seventy: 70, eighty: 80, ninety: 90
+  };
+
+  const words = text.replace(/-/g, ' ').split(/\s+/);
+  let totalValue = 0;
+  let matched = false;
+  for (const w of words) {
+    if (w in ones) { totalValue += ones[w]; matched = true; }
+    else if (w in tens) { totalValue += tens[w]; matched = true; }
+    else if (w === 'hundred') { totalValue = (totalValue === 0 ? 1 : totalValue) * 100; matched = true; }
+  }
+  return matched ? totalValue : NaN;
+}
+
+async function finishGame(screenId, scoreFieldId) {
+  const classCode = localStorage.getItem("joinedClassCode");
+  const studentName = localStorage.getItem("studentName") || "Anonymous";
+  if (classCode) await saveScore(classCode, studentName, score);
+  document.getElementById('simulation').style.display = 'none';
+  document.getElementById(screenId).style.display = 'block';
+  document.getElementById(scoreFieldId).textContent = `You scored ${score} / ${total}`;
+}
+
+function checkAnswer(said) {
+  const heard = wordsToNumber(said);
   const resultBox = document.getElementById('result-box');
 
   if (heard === currentAnswer) {
@@ -67,13 +130,7 @@ function checkAnswer(said) {
     score++;
     updateProgress();
     if (score >= total) {
-      setTimeout(async () => {
-        const classCode = localStorage.getItem("joinedClassCode");
-        if (classCode) await saveScore(classCode, score);
-        document.getElementById('simulation').style.display = 'none';
-        document.getElementById('victory').style.display = 'block';
-        document.getElementById('final-score-victory').textContent = `You scored ${score} / ${total} 🌟`;
-      }, 1000);
+      setTimeout(() => finishGame('victory', 'final-score-victory'), 1000);
       return;
     }
   } else {
@@ -82,13 +139,7 @@ function checkAnswer(said) {
     lives--;
     updateHearts();
     if (lives <= 0) {
-      setTimeout(async () => {
-        const classCode = localStorage.getItem("joinedClassCode");
-        if (classCode) await saveScore(classCode, score);
-        document.getElementById('simulation').style.display = 'none';
-        document.getElementById('game-over').style.display = 'block';
-        document.getElementById('final-score-gameover').textContent = `You scored ${score} / ${total}`;
-      }, 1000);
+      setTimeout(() => finishGame('game-over', 'final-score-gameover'), 1000);
       return;
     }
   }
@@ -103,9 +154,9 @@ function restartGame() {
   document.getElementById('simulation').style.display = 'block';
   document.getElementById('game-over').style.display = 'none';
   document.getElementById('victory').style.display = 'none';
-  generateQuestion();
+  generateQuestion(); // keeps the same level the teacher assigned
 }
 
-generateQuestion();
 updateHearts();
 updateProgress();
+loadLevel();

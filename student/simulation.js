@@ -1,6 +1,7 @@
 let lives = 3;
 let score = 0;
-let total = 10;
+let questionNumber = 0;   // how many questions have been asked
+let total = 10;           // total questions in a round
 let currentAnswer = null;
 let level = "mixed"; // set from the teacher's chosen exercise on load
 
@@ -19,6 +20,8 @@ function randInt(min, max) {
 }
 
 function generateQuestion() {
+  questionNumber++;
+
   // Decide which operation this question uses
   let op;
   if (level === "mixed") {
@@ -46,7 +49,7 @@ function generateQuestion() {
     a = b * currentAnswer;        // guarantees a clean whole-number answer
   }
 
-  document.getElementById('exercise-text').textContent = `What is ${a} ${op} ${b}?`;
+  document.getElementById('exercise-text').textContent = `Question ${questionNumber} of ${total}: What is ${a} ${op} ${b}?`;
   document.getElementById('result-box').textContent = '';
   document.getElementById('transcript-box').textContent = '';
 }
@@ -57,7 +60,7 @@ function updateHearts() {
 }
 
 function updateProgress() {
-  const pct = (score / total) * 100;
+  const pct = (questionNumber / total) * 100;
   document.getElementById('progress-bar').style.width = pct + '%';
   document.getElementById('score').textContent = `${score} / ${total}`;
 }
@@ -129,10 +132,6 @@ function checkAnswer(said) {
     resultBox.style.color = 'lightgreen';
     score++;
     updateProgress();
-    if (score >= total) {
-      setTimeout(() => finishGame('victory', 'final-score-victory'), 1000);
-      return;
-    }
   } else {
     resultBox.textContent = `❌ Not quite! The answer was ${currentAnswer}`;
     resultBox.style.color = '#ff6b6b';
@@ -143,12 +142,20 @@ function checkAnswer(said) {
       return;
     }
   }
+
+  // If all 10 questions have been asked, end the round and show the score
+  if (questionNumber >= total) {
+    setTimeout(() => finishGame('victory', 'final-score-victory'), 1000);
+    return;
+  }
+
   setTimeout(generateQuestion, 1500);
 }
 
 function restartGame() {
   lives = 3;
   score = 0;
+  questionNumber = 0;
   updateHearts();
   updateProgress();
   document.getElementById('simulation').style.display = 'block';

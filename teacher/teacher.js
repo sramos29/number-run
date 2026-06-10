@@ -4,6 +4,8 @@ window.onload = async function() {
   await loadLevel();
   await loadAnnouncements();
   await loadScores();
+  // Keep the scoreboard live so new games appear without refreshing
+  setInterval(loadScores, 4000);
 }
 
 // Load or generate class code

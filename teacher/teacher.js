@@ -80,20 +80,19 @@ async function loadAnnouncements() {
   }).join("");
 }
 
-// Load average + individual named scores
+// Show every individual student score (no average)
 async function loadScores() {
   const rows = await getScores();
-  const avgDisplay = document.getElementById("average-score");
   const list = document.getElementById("scores-list");
 
+  // Average display removed — hide it if it's still in the HTML
+  const avgDisplay = document.getElementById("average-score");
+  if (avgDisplay) avgDisplay.style.display = "none";
+
   if (!rows || rows.length === 0) {
-    avgDisplay.textContent = "No scores yet";
     list.innerHTML = "<p style='opacity:0.4; font-weight:600;'>Students will appear here once they play.</p>";
     return;
   }
-
-  const avg = Math.round((rows.reduce(function(s, r) { return s + r.score; }, 0) / rows.length) * 10) / 10;
-  avgDisplay.textContent = `Class average: ${avg} / 10 ⭐`;
 
   list.innerHTML = rows.map(function(r, i) {
     const medal = i === 0 ? "🥇 " : i === 1 ? "🥈 " : i === 2 ? "🥉 " : "";

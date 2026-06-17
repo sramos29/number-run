@@ -15,7 +15,7 @@ function headers(extra) {
 async function getClassroomData() {
   const response = await fetch(
     `${SUPABASE_URL}/rest/v1/classroom?select=*&limit=1`,
-    { headers: headers() }
+    { headers: headers(), cache: "no-store" }
   );
   const data = await response.json();
   return data.length > 0 ? data[0] : null;
@@ -37,6 +37,7 @@ async function saveClassroomData(classCode, announcements, assignedExercise) {
       `${SUPABASE_URL}/rest/v1/classroom?class_code=eq.${existing.class_code}`,
       {
         method: "PATCH",
+        cache: "no-store",
         headers: headers({
           "Content-Type": "application/json",
           "Prefer": "return=representation"
@@ -52,6 +53,7 @@ async function saveClassroomData(classCode, announcements, assignedExercise) {
       `${SUPABASE_URL}/rest/v1/classroom`,
       {
         method: "POST",
+        cache: "no-store",
         headers: headers({
           "Content-Type": "application/json",
           "Prefer": "return=representation"
@@ -93,7 +95,6 @@ async function saveAnnouncement(text) {
 }
 
 // --- Exercise level (which kind of maths the students get) ---
-// Stored in the classroom row's assigned_exercise column.
 const VALID_LEVELS = ["addition", "subtraction", "multiplication", "division", "mixed"];
 
 async function getAssignedExercise() {
@@ -111,12 +112,13 @@ async function saveAssignedExercise(level) {
   );
 }
 
-// --- Scores (now with student names) ---
+// --- Scores (with student names) ---
 async function saveScore(classCode, studentName, score) {
   await fetch(
     `${SUPABASE_URL}/rest/v1/scores`,
     {
       method: "POST",
+      cache: "no-store",
       headers: headers({
         "Content-Type": "application/json",
         "Prefer": "return=representation"
@@ -136,7 +138,7 @@ async function getScores() {
   if (!data) return [];
   const response = await fetch(
     `${SUPABASE_URL}/rest/v1/scores?class_code=eq.${data.class_code}&select=student_name,score&order=score.desc`,
-    { headers: headers() }
+    { headers: headers(), cache: "no-store" }
   );
   const rows = await response.json();
   return Array.isArray(rows) ? rows : [];
@@ -150,9 +152,6 @@ async function getAverageScore() {
 }
 
 // --- New session: fresh class code + clean slate ---
-// Reuses the single classroom row and gives it a brand new code.
-// Because every score is tied to a class_code, the old scores stop
-// showing on the dashboard the moment the code changes.
 async function startNewSession() {
   const data = await getClassroomData();
   const newCode = generateClassCode();
@@ -161,6 +160,7 @@ async function startNewSession() {
       `${SUPABASE_URL}/rest/v1/classroom?class_code=eq.${data.class_code}`,
       {
         method: "PATCH",
+        cache: "no-store",
         headers: headers({
           "Content-Type": "application/json",
           "Prefer": "return=representation"

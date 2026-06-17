@@ -1,7 +1,6 @@
 const SUPABASE_URL = "https://ehskahiyhiqafaubxhxo.supabase.co";
 const SUPABASE_KEY = "sb_publishable__Bt-TIM5-XTZZ7teVR1XBA_rR5rTg9M";
 
-// Shared headers so we don't repeat ourselves
 function headers(extra) {
   return Object.assign(
     {
@@ -94,7 +93,6 @@ async function saveAnnouncement(text) {
   );
 }
 
-// --- Exercise level (which kind of maths the students get) ---
 const VALID_LEVELS = ["addition", "subtraction", "multiplication", "division", "mixed"];
 
 async function getAssignedExercise() {
@@ -112,7 +110,6 @@ async function saveAssignedExercise(level) {
   );
 }
 
-// --- Scores (with student names) ---
 async function saveScore(classCode, studentName, score) {
   await fetch(
     `${SUPABASE_URL}/rest/v1/scores`,
@@ -132,12 +129,10 @@ async function saveScore(classCode, studentName, score) {
   );
 }
 
-// Every individual score for the current class, highest first
+// Show EVERY student's score (no class-code filter), highest first
 async function getScores() {
-  const data = await getClassroomData();
-  if (!data) return [];
   const response = await fetch(
-    `${SUPABASE_URL}/rest/v1/scores?class_code=eq.${data.class_code}&select=student_name,score&order=score.desc`,
+    `${SUPABASE_URL}/rest/v1/scores?select=student_name,score&order=score.desc`,
     { headers: headers(), cache: "no-store" }
   );
   const rows = await response.json();
@@ -151,8 +146,12 @@ async function getAverageScore() {
   return Math.round(avg * 10) / 10;
 }
 
-// --- New session: fresh class code + clean slate ---
+// New session: fresh code, and clear the whole scoreboard
 async function startNewSession() {
+  await fetch(
+    `${SUPABASE_URL}/rest/v1/scores?score=gte.0`,
+    { method: "DELETE", cache: "no-store", headers: headers({ "Prefer": "return=minimal" }) }
+  );
   const data = await getClassroomData();
   const newCode = generateClassCode();
   if (data) {
@@ -165,11 +164,7 @@ async function startNewSession() {
           "Content-Type": "application/json",
           "Prefer": "return=representation"
         }),
-        body: JSON.stringify({
-          class_code: newCode,
-          announcements: "",
-          assigned_exercise: ""
-        })
+        body: JSON.stringify({ class_code: newCode, announcements: "", assigned_exercise: "" })
       }
     );
   } else {
